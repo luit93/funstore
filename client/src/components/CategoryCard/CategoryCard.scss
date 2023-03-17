@@ -3,16 +3,23 @@
     height: 80vh;
     gap: 10px;
     margin: 10px;
+    transition: ease all .5s;
+    
+ 
 
     .col{
         flex: 1;
         display: flex;
         gap: 10px;
         flex-direction: column;
+        transition: ease all .5s;
+
     }
 
     .col2{
         flex: 2;
+        transition: ease all .5s;
+
     }
 
     .row{
@@ -45,4 +52,30 @@
             object-fit: cover;
         }
     }
+}
+
+@media (max-width: 768px) {
+    .category-card{
+        flex-direction: column;
+        transition: ease all .5s;
+       .row2{
+        button{
+            top: -8em;
+          
+           
+           
+           } 
+       }
+       
+    }
+    .col{
+        height: 40vh;
+    }
+    .mid-col{
+        height: 20vh;
+    }
+   
+  
+   
+
 }

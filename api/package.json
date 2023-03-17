@@ -1,0 +1,33 @@
+{
+  "name": "api",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.3",
+    "@strapi/plugin-i18n": "4.7.1",
+    "@strapi/plugin-users-permissions": "4.7.1",
+    "@strapi/strapi": "4.7.1",
+    "better-sqlite3": "8.0.1",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
+    "stripe": "^11.14.0"
+  },
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "103e473a-7a68-42a5-84bb-194dddbee8f3"
+  },
+  "engines": {
+    "node": ">=14.19.1 <=18.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}

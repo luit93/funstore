@@ -3,37 +3,50 @@ import "./Product.scss"
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import BalanceIcon from '@mui/icons-material/Balance';
+import { useParams } from 'react-router-dom';
+import useFetch from "../../hooks/useFetch";
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../redux/cartReducer';
+
 const Product = () => {
-    const [currentImg,setCurrentImg]=useState(0)
+    const id = useParams().id
+    const [currentImg,setCurrentImg]=useState('img')
     const [quantity,setQuantity] = useState(1)
-    const images=[
-        "https://m.media-amazon.com/images/I/815Wugkm4EL.jpg",
-        "https://cdn.shopify.com/s/files/1/0071/1609/5570/products/image_da7ffe5b-16c0-472b-8523-52b75bd025d8.jpg?v=1672629253",
-    ]
+    const dispatch = useDispatch()
+    const { data, loading, error } = useFetch(`/products/${id}?populate=*`)
 
   return (
     <div className='product'>
+       {loading?( "loading"): (
+       <>
         <div className="left">
             <div className="images">
-                <img src={images[0]} alt='' onClick={e=>setCurrentImg(0)}/>
-                <img src={images[1]} alt='' onClick={e=>setCurrentImg(1)}/>
+                <img src={process.env.REACT_APP_UPLOAD_URL +data?.attributes?.img?.data?.attributes?.url} alt='' onClick={(e)=>setCurrentImg("img")}/>
+                <img src={process.env.REACT_APP_UPLOAD_URL +data?.attributes?.img2?.data?.attributes?.url} alt='' onClick={(e)=>setCurrentImg("img2")}/>
             </div>
             <div className="main-img">
-                <img src={images[currentImg]} alt=''/>
+                <img src={process.env.REACT_APP_UPLOAD_URL +data?.attributes[currentImg]?.data?.attributes?.url} alt=''/>
             </div>
         </div>
         <div className="right">
-            <h1>Title</h1>
-            <span className='price'>$175</span>
+            <h1>{data?.attributes?.title}</h1>
+            <span className='price'>${data?.attributes?.price}</span>
             <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit est nam tenetur rerum iure obcaecati, cum officia voluptatem aliquid eveniet sunt!
+                {data?.attributes?.desc}
             </p>
             <div className="quantity">
-                <button onClick={e=>setQuantity(prev=>prev === 1 ? 1 : prev-1)}>-</button>
+                <button onClick={()=>setQuantity(prev=>prev === 1 ? 1 : prev-1)}>-</button>
                 {quantity}
-                <button onClick={e=>setQuantity(prev=>prev === 10 ? 10 : prev+1)}>+</button>
+                <button onClick={()=>setQuantity(prev=>prev === 10 ? 10 : prev+1)}>+</button>
             </div>
-            <button className="add">
+            <button className="add" onClick={()=>dispatch(addToCart({
+                id:data.id,
+                title:data.attributes.title,
+                desc:data.attributes.desc,
+                img:data.attributes.img.data.attributes.url,
+                price:data.attributes.price,
+                quantity,
+            }))}>
                 <AddShoppingCartIcon/>ADD TO CART
             </button>
             <div className="links">
@@ -45,7 +58,7 @@ const Product = () => {
                 <hr/>
                 <span>Lorem ipsum dolor sit amet ipsum dolor sit ametipsum dolor sit ametipsum dolor sit amet.</span>
             </div>
-        </div>
+        </div></>)}
     </div>
   )
 }

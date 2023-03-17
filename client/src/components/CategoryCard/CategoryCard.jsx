@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 const CategoryCard = () => {
   return (
     <div className='category-card'>
-        <div className="col">
+        <div className="col left-col">
             <div className="row">
             <img
             src="https://images.unsplash.com/photo-1599433762903-b541f08b9aea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80"
@@ -28,7 +28,7 @@ const CategoryCard = () => {
           </button>
             </div>
         </div>
-        <div className="col">
+        <div className="col mid-col">
             <div className="row">
             <img
             src="https://images.unsplash.com/photo-1607853202273-797f1c22a38e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80"
@@ -41,15 +41,15 @@ const CategoryCard = () => {
           </button>
             </div>
         </div>
-        <div className="col col2">
-            <div className="row">
+        <div className="col col2 ">
+            <div className="row ">
                 <div className="col">
-                    <div className="row">
+                    <div className="row row2">
                     <img
                     src="https://images.unsplash.com/photo-1611526114392-8d8e229f511d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1451&q=80"
                     alt=""
                     />
-          <button>
+          <button className='btn2'>
             <Link className="link" to="/categories/1">
               Accessories
             </Link>
@@ -57,12 +57,12 @@ const CategoryCard = () => {
                     </div>
                 </div>
                 <div className="col">
-                    <div className="row">
+                    <div className="row row2">
                     <img
             src="https://images.unsplash.com/photo-1585667055741-7a94f3397509?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
             alt=""
           />
-          <button>
+          <button className='btn2'>
             <Link className="link" to="/categories/1">
               Featured
             </Link>

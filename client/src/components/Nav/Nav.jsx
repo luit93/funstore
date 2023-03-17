@@ -6,14 +6,21 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link } from 'react-router-dom';
 import "./Nav.scss"
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
 
 const Nav = () => {
     const [openCart,setOpenCart] = useState(false)
+    const dispatch = useDispatch()
+    const products = useSelector(state=> state.cart.products)
+
   return (
     <div className='navbar'>
         <div className="wrapper">
         <div className='left'>
+            <div className="currency">
             <div className='item'>
                 <img src='/img/en.png'/>
                 <ArrowDropDownIcon />
@@ -23,14 +30,16 @@ const Nav = () => {
                 <spam>USD</spam>
                 <ArrowDropDownIcon/>
             </div>
+            </div>
+            
             <div className="item">
                 <Link className='link' to="/categories/1">Toys</Link>
             </div>
             <div className="item">
-                <Link className='link' to="/categories/2">Electronics</Link>
+                <Link className='link' to="/categories/3">Electronics</Link>
             </div>
             <div className="item">
-                <Link className='link' to="/categories/3">Accessories</Link>
+                <Link className='link' to="/categories/2">Accessories</Link>
             </div>
             <div className="item">
                 <Link className='link' to="/categories/4">Media</Link>
@@ -58,12 +67,13 @@ const Nav = () => {
             <FavoriteBorderIcon/>
             <div className="cart-icon" onClick={()=>setOpenCart(!openCart)}>
                 <ShoppingCartIcon />
-                <span>0</span>
+                <span>{products.length}</span>
             </div>
         </div>
         </div>
         </div>
         {openCart && <ShoppingCart/>}
+        
     </div>
   )
 }

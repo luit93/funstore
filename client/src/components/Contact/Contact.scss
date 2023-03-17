@@ -1,34 +1,66 @@
 .contact{
-    background-color: #2c3439;
-    color: #ced9bf;
+    background-color: #87b1ac;
+    color: #c7d8c6;
     padding: 15px;
     display: flex;
     justify-content: center;
 
     .wrapper{
-        width: 50%;
+        width: 100vw;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: space-around;
 
         input{
             padding: 10px;
-            border: none;
-            border-radius: 5px 0 0 5px;
+            border: none; 
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 1em;
+            width: 100%;
+            max-width: 250px;
         }
 
         button{
             padding: 10px;
-            background: #ced9bf;
-            color: #2c3439;
-            border-radius: 0 5px 5px 0;
+            background: #c7d8c6;
+            color: #87b1ac;
+            border-radius: 5px;
             border: none;
             cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+            max-width: 270px;
+        }
+        button:hover{
+          transform: scale(1.02,1.02);
+          transition: all ease 300ms;
         }
 
         .icons{
             display: flex;
-            gap: 10px;
+            gap: 25px;
+            cursor: pointer;
+            
+
+            margin-top: 10px;
+            .icon{
+              font-size: 35px;
+              text-decoration: none;
+              color:#ced9bf;
+             
+            }
+            .icon:hover{
+              transform: scale(1.5,1.5);
+              transition: all ease 300ms;
+            }
         }
+    }
+    @media (max-width: 768px) {
+      .wrapper {
+        flex-direction: column;
+        justify-content: space-evenly;
+
+      }
     }
 }

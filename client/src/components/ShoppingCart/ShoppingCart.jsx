@@ -1,49 +1,65 @@
 import React from 'react'
 import './ShoppingCart.scss'
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useSelector } from 'react-redux';
+import { removeItem, resetCart } from '../../redux/cartReducer';
+import { useDispatch } from 'react-redux';
+import {loadStripe} from '@stripe/stripe-js';
+import {makeRequest} from "../../makeRequest"
 const ShoppingCart = () => {
-  const cartData= [
-    {
-      "id": 1,
-      "img_url": "https://images.unsplash.com/photo-1619023495338-ae6fa7307819?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
-      "img_url2": "https://images.unsplash.com/photo-1628426912481-b66c067fdf7a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-      "title": "Toy 1",
-      "desc":"buying this item now!",
-      "onSale": true,
-      "old_price": 20.0,
-      "sale_price": 15.0
-  },
-  {
-    "id": 2,
-    "img_url": "https://m.media-amazon.com/images/I/815Wugkm4EL.jpg",
-    "img_url2": "https://cdn.shopify.com/s/files/1/0071/1609/5570/products/image_da7ffe5b-16c0-472b-8523-52b75bd025d8.jpg?v=1672629253",
-    "title": "Toy 2",
-    // "desc":"buying this item for some one!",
-    "onSale": true,
-    "old_price": 25.0,
-    "sale_price": 20.0
-},
-  ]
+  const products = useSelector(state=>state.cart.products)
+  const dispatch = useDispatch()
+
+  const subTotal = ()=>{
+    let total =0
+    products.forEach((element) => {
+      total+= element.quantity * element.price;
+    }) 
+   return total.toFixed(2)
+  };
+
+
+   const stripePromise = loadStripe('pk_test_51MmHHRICSxePYVSIgXPnIq3ZgnFnXsbClI8sQyRoP21sDIBHDegxJFk8w9IjGMxU7i7OOmq3cmSzElZDWTcqNowp00eVKfUOxS')
+
+   
+   const handleOnPayment = async () => {
+    try {
+      const stripe = await stripePromise;
+      const res = await makeRequest.post("/orders", {
+        products,
+      });
+      await stripe.redirectToCheckout({
+               sessionId: res.data.stripeSession.id,
+
+      });
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
   return (
+
     <div className='cart'>
         <h1>Items in your Cart</h1>
-        {cartData.map(i=>(
+        {products.map(i=>(
           <div className="item" key={i.id}>
-            <img src={i.img_url} alt=''/>
+            <img src={process.env.REACT_APP_UPLOAD_URL + i.img} alt=''/>
             <div className="details">
               <h1>{i.title}</h1>
               <p>{i.desc?.substring(0,100)}</p>
-              <div className="price">1 x ${i.sale_price}</div>
+              <div className="price"> {i.quantity} x ${i.price} </div>
             </div>
-            <DeleteIcon className='delete'/>
+            <DeleteIcon className='delete' onClick={()=>dispatch(removeItem(i.id))}/>
           </div>
         ))}
         <div className="total">
           <span>TOTAL</span>
-          <span>$35</span>
+          <span>${subTotal()}</span>
         </div>
-        <button>CHECKOUT</button>
-        <span className="reset">Reset Cart</span>
+        <button onClick={handleOnPayment}>CHECKOUT</button>
+        <span className="reset"  onClick={()=>dispatch(resetCart())}>Reset Cart</span>
     </div>
   )
 }

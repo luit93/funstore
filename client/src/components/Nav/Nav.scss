@@ -4,9 +4,11 @@
     .wrapper{
         padding: 10px 30px;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-
+        justify-content: space-around;
+        align-items:flex-start;
+        .hide-items {
+            display: none;
+          }
         .item{
             display: flex;
             align-items: center;
@@ -16,20 +18,29 @@
         .left{
             display: flex;
             align-items: center;
-            gap: 25px;
+            gap: 0.4em;
+            flex-wrap:wrap-reverse;
+            .currency{
+                display: flex;
+                flex-direction: row;
+            }
         }
         .center{
-            font-size: 39px;
-            letter-spacing: 2px;
+            font-size: 200%; /* reduce font size on mobile */
+            letter-spacing: 0.02em;
+         
+          
+            
         }
+       
         .right{
             display: flex;
             align-items: center;
-            gap: 25px;
+            gap: 0.4em;
 
             .icons{
                 display: flex;
-                gap: 15px;
+                gap: 0.2em;
                 color: #222;
                 cursor: pointer;
 
@@ -55,4 +66,66 @@
         }
 
     }
+
+    /* media query for screens smaller than 768px */
+    @media (max-width: 800px) {
+        .wrapper {
+            width: 100vw;
+            padding: 10px;
+            // flex-direction: column; /* stack items vertically */
+            justify-content: space-between; 
+            align-items: center;
+            .left{
+
+              
+                .currency{
+                    display: none;
+                }
+                // display: none;
+            }
+            .center{
+                font-size: 23px; /* reduce font size on mobile */
+                letter-spacing: 1px;
+                
+              
+                
+            }
+            .right{
+                display: none;
+            }
+        }
+
+        
+        
+        .center{
+            font-size: 28px; /* reduce font size further on mobile */
+            margin: 10px 0; /* add some spacing */
+        }
+
+        .right{
+            gap: 10px;
+
+            .icons{
+                gap: 10px;
+                
+                .cart-icon{
+                    span{
+                        font-size: 9px; /* make cart icon smaller on mobile */
+                        width: 16px;
+                        height: 16px;
+                        right: -8px;
+                        top: -8px;
+                    }
+                }
+            }
+        }
+    }
+    
+      
+    //   @media only screen and (min-width: 768px) {
+    //     .hide-items {
+    //       display: flex !important;
+    //     }
+    //   }
+      
 }
